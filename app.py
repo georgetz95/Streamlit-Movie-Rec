@@ -10,9 +10,16 @@ st.set_page_config(layout="wide")
 @st.cache(allow_output_mutation=True)
 def load_data():
     movies = pd.read_csv('movies_streamlit.csv')
-    cs_matrix1 = pickle.load(open('cs_matrix_1.pkl', 'rb'))
-    cs_matrix2 = pickle.load(open('cs_matrix_2.pkl', 'rb'))
-    cs_matrix3 = pickle.load(open('cs_matrix_3.pkl', 'rb'))
+    with open('cs_matrix_1.pkl', 'rb') as f1:
+        cs_matrix1 = pickle.load(f1)
+    with open('cs_matrix_2.pkl', 'rb') as f2:
+        cs_matrix2 = pickle.load(f2)
+    with open('cs_matrix_3.pkl', 'rb') as f3:
+        cs_matrix3 = pickle.load(f3)
+
+    #cs_matrix1 = pickle.load(open('cs_matrix_1.pkl', 'rb'))
+    #cs_matrix2 = pickle.load(open('cs_matrix_2.pkl', 'rb'))
+    #cs_matrix3 = pickle.load(open('cs_matrix_3.pkl', 'rb'))
     cs_matrix = sparse.vstack([cs_matrix1, cs_matrix2, cs_matrix3])
     credits = pickle.load(open('credits_streamlit.pkl', 'rb'))
     return movies, cs_matrix, credits
