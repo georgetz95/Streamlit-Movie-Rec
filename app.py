@@ -1,11 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
-import joblib
 #from PIL import Image
 #from io import BytesIO
-from scipy import sparse
+import scipy.sparse
 st.set_page_config(layout="wide")
 
 @st.cache(allow_output_mutation=True)
@@ -17,9 +15,9 @@ def load_data():
     #     cs_matrix2 = pickle.load(f2)
     # with open('cs_matrix_3.pkl', 'rb') as f3:
     #     cs_matrix3 = pickle.load(f3)
-    cs_matrix = joblib.load('cs_matrix1.pkl')
+    cs_matrix = scipy.sparse.load_npz('cs_matrix.npz')
     #cs_matrix = sparse.vstack([cs_matrix1, cs_matrix2, cs_matrix3])
-    credits = joblib.load('credits_streamlit.pkl')
+    credits = pd.read_json('credits_streamlit.json', orient='records')
     return movies, cs_matrix, credits
 
 movies, cs_matrix, credits = load_data()
