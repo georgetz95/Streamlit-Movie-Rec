@@ -1,8 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 credits_streamlit.pkl filter=lfs diff=lfs merge=lfs -text
-cs_matrix_1.pkl filter=lfs diff=lfs merge=lfs -text
-cs_matrix_2.pkl filter=lfs diff=lfs merge=lfs -text
-cs_matrix_3.pkl filter=lfs diff=lfs merge=lfs -text
 movies_streamlit.csv filter=lfs diff=lfs merge=lfs -text
-cs_matrix.pkl filter=lfs diff=lfs merge=lfs -text
+cs_matrix1.pkl filter=lfs diff=lfs merge=lfs -text

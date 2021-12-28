@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
+import joblib
 #from PIL import Image
 #from io import BytesIO
 from scipy import sparse
@@ -10,18 +11,15 @@ st.set_page_config(layout="wide")
 @st.cache(allow_output_mutation=True)
 def load_data():
     movies = pd.read_csv('movies_streamlit.csv')
-    with open('cs_matrix_1.pkl', 'rb') as f1:
-        cs_matrix1 = pickle.load(f1)
-    with open('cs_matrix_2.pkl', 'rb') as f2:
-        cs_matrix2 = pickle.load(f2)
-    with open('cs_matrix_3.pkl', 'rb') as f3:
-        cs_matrix3 = pickle.load(f3)
-
-    #cs_matrix1 = pickle.load(open('cs_matrix_1.pkl', 'rb'))
-    #cs_matrix2 = pickle.load(open('cs_matrix_2.pkl', 'rb'))
-    #cs_matrix3 = pickle.load(open('cs_matrix_3.pkl', 'rb'))
-    cs_matrix = sparse.vstack([cs_matrix1, cs_matrix2, cs_matrix3])
-    credits = pickle.load(open('credits_streamlit.pkl', 'rb'))
+    # with open('cs_matrix_1.pkl', 'rb') as f1:
+    #     cs_matrix1 = pickle.load(f1)
+    # with open('cs_matrix_2.pkl', 'rb') as f2:
+    #     cs_matrix2 = pickle.load(f2)
+    # with open('cs_matrix_3.pkl', 'rb') as f3:
+    #     cs_matrix3 = pickle.load(f3)
+    cs_matrix = joblib.load('cs_matrix1.pkl')
+    #cs_matrix = sparse.vstack([cs_matrix1, cs_matrix2, cs_matrix3])
+    credits = joblib.load('credits_streamlit.pkl')
     return movies, cs_matrix, credits
 
 movies, cs_matrix, credits = load_data()
