@@ -9,21 +9,11 @@ st.set_page_config(layout="wide")
 @st.cache(allow_output_mutation=True)
 def load_data():
     movies = pd.read_csv('movies_streamlit.csv')
-    # with open('cs_matrix_1.pkl', 'rb') as f1:
-    #     cs_matrix1 = pickle.load(f1)
-    # with open('cs_matrix_2.pkl', 'rb') as f2:
-    #     cs_matrix2 = pickle.load(f2)
-    # with open('cs_matrix_3.pkl', 'rb') as f3:
-    #     cs_matrix3 = pickle.load(f3)
     cs_matrix = scipy.sparse.load_npz('cs_matrix.npz')
-    #cs_matrix = np.genfromtxt('cs_matrix.csv', delimiter=',')
-    #cs_matrix = sparse.vstack([cs_matrix1, cs_matrix2, cs_matrix3])
     credits = pd.read_json('credits_streamlit.json', orient='records')
     return movies, cs_matrix, credits
 
 movies, cs_matrix, credits = load_data()
-#movies, cs_matrix = load_data()
-api = 'ec619fb3830712e3767e7582898a8592'
 
 def recommendations(title, cosine_sim=cs_matrix):
     idx = movies.loc[movies.title == title].index[0]
