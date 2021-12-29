@@ -16,7 +16,7 @@ def load_data():
     # with open('cs_matrix_3.pkl', 'rb') as f3:
     #     cs_matrix3 = pickle.load(f3)
     #cs_matrix = scipy.sparse.load_npz('cs_matrix.npz')
-    cs_matrix = np.load('cs_matrix1.npy')
+    cs_matrix = np.load('cs_matrix1.npy', allow_pickle=True)
     #cs_matrix = sparse.vstack([cs_matrix1, cs_matrix2, cs_matrix3])
     credits = pd.read_json('credits_streamlit.json', orient='records')
     return movies, cs_matrix, credits
