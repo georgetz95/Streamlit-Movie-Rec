@@ -15,7 +15,8 @@ def load_data():
     #     cs_matrix2 = pickle.load(f2)
     # with open('cs_matrix_3.pkl', 'rb') as f3:
     #     cs_matrix3 = pickle.load(f3)
-    cs_matrix = scipy.sparse.load_npz('cs_matrix.npz')
+    #cs_matrix = scipy.sparse.load_npz('cs_matrix.npz')
+    cs_matrix = np.load('cs_matrix.npy')
     #cs_matrix = sparse.vstack([cs_matrix1, cs_matrix2, cs_matrix3])
     credits = pd.read_json('credits_streamlit.json', orient='records')
     return movies, cs_matrix, credits
@@ -26,7 +27,8 @@ api = 'ec619fb3830712e3767e7582898a8592'
 
 def recommendations(title, cosine_sim=cs_matrix):
     idx = movies.loc[movies.title == title].index[0]
-    sim_scores = list(enumerate(cosine_sim[idx].toarray()[0]))
+    #sim_scores = list(enumerate(cosine_sim[idx].toarray()[0]))
+    sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:11]
     movie_indices = [i[0] for i in sim_scores]
