@@ -150,7 +150,7 @@ if st.session_state['indices'] == None:
     st.title('Movie Recommendation System')
     #title = '<p style="font-family: sans-serif; color:White; font-size: 90px; font-weight: bold;-webkit-text-stroke: 5px Red;">Movie Recommendation System</p>'
     #st.markdown(title, unsafe_allow_html=True)
-    selected_movie = st.selectbox('Select a movie to get recommendations:', sorted(movies['title'].values))
+    selected_movie = st.selectbox('Select a movie to get recommendations:', sorted(movies['title']))
     st.button('Recommend', on_click=recommendations, kwargs=dict(title=selected_movie))
     st.button('Reset', on_click=update_session_state, kwargs=dict(name=['indices', 'movie_details'], value=[None, None]))
     set_background('image2.png')
