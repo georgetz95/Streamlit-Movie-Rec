@@ -4,16 +4,19 @@ import numpy as np
 #from PIL import Image
 #from io import BytesIO
 import scipy.sparse
+import requests
+from sklearn.metrics.pairwise import cosine_similarity
 st.set_page_config(layout="wide")
 
 @st.cache(allow_output_mutation=True)
 def load_data():
     movies = pd.read_csv('movies_streamlit.csv')
-    cs_matrix = scipy.sparse.load_npz('cs_matrix.npz')
-    credits = pd.read_json('credits_streamlit.json', orient='records')
-    return movies, cs_matrix, credits
+    cv_matrix = scipy.sparse.load_npz('cv_matrix.npz')
+    cs_matrix = cosine_similarity(cv_matrix, dense_output=False)
+    #cs_matrix = scipy.sparse.load_npz('cs_matrix.npz')
+    return movies, cs_matrix
 
-movies, cs_matrix, credits = load_data()
+movies, cs_matrix = load_data()
 
 def recommendations(title, cosine_sim=cs_matrix):
     idx = movies.loc[movies.title == title].index[0]
@@ -33,13 +36,15 @@ def update_session_state(name, value):
         st.session_state[n] = v
 
 def get_cast(movie_id):
-    cast = credits.loc[credits.id == movie_id, 'cast'].values
+    api = 'ec619fb3830712e3767e7582898a8592'
+    link = f"https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key={api}&language=en-US"
+    cast = requests.get(link).json()['cast']
     names = []
     characters = []
     profile_paths = []
     base_url = 'https://image.tmdb.org/t/p/w500'
 
-    for val in cast[0]:
+    for val in cast:
         if hasattr(val, 'get'):
             names.append(val.get('name'))
             characters.append(val.get('character'))
