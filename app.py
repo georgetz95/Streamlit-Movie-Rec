@@ -153,7 +153,6 @@ if st.session_state['indices'] == None:
     selected_movie = st.selectbox('Select a movie to get recommendations:', sorted(movies['title'].values))
     st.button('Recommend', on_click=recommendations, kwargs=dict(title=selected_movie))
     st.button('Reset', on_click=update_session_state, kwargs=dict(name=['indices', 'movie_details'], value=[None, None]))
-    st.write(cs_matrix)
     set_background('image2.png')
     
 
